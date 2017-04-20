@@ -1,0 +1,133 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+    >sigmund (v1.0.1)</a>
+</h1>
+<h4>Quick and dirty signatures for Objects.</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.sigmund">module sigmund</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sigmund.sigmund">
+            function <span class="apidocSignatureSpan"></span>sigmund
+            <span class="apidocSignatureSpan">(subject, maxSessions)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.sigmund" id="apidoc.module.sigmund">module sigmund</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.sigmund.sigmund" id="apidoc.element.sigmund.sigmund">
+        function <span class="apidocSignatureSpan"></span>sigmund
+        <span class="apidocSignatureSpan">(subject, maxSessions)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function sigmund(subject, maxSessions) {
+    maxSessions = maxSessions || 10;
+    var notes = [];
+    var analysis = &#x27;&#x27;;
+    var RE = RegExp;
+
+    function psychoAnalyze (subject, session) {
+        if (session &#x3e; maxSessions) return;
+
+        if (typeof subject === &#x27;function&#x27; ||
+            typeof subject === &#x27;undefined&#x27;) {
+            return;
+        }
+
+        if (typeof subject !== &#x27;object&#x27; || !subject ||
+            (subject instanceof RE)) {
+            analysis += subject;
+            return;
+        }
+
+        if (notes.indexOf(subject) !== -1 || session === maxSessions) return;
+
+        notes.push(subject);
+        analysis += &#x27;{&#x27;;
+        Object.keys(subject).forEach(function (issue, _, __) {
+            // pseudo-private values.  skip those.
+            if (issue.charAt(0) === &#x27;_&#x27;) return;
+            var to = typeof subject[issue];
+            if (to === &#x27;function&#x27; || to === &#x27;undefined&#x27;) return;
+            analysis += issue;
+            psychoAnalyze(subject[issue], session + 1);
+        });
+    }
+    psychoAnalyze(subject, 0);
+    return analysis;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
